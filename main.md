@@ -108,3 +108,27 @@ O pós-processamento é uma etapa final na _pipeline_ de renderização, onde ef
 Nessa etapa a **Cinnamon Engine** aplica efeitos como **SSAO** (_Screen Space Ambient Occlusion_), que simula a colusão da luz em cantos e superfícies próximas, aumentando a percepção de profundidade e realismo da cena, _Bloom_, que simula o efeito de luz intensa e difusa, **SSR** (_Screen Space Reflections_) que simula reflexos em superfícies refletivas, **FXAA** (_Fast Approximate Anti-Aliasing_) que suaviza as bordas dos objetos para evitar o efeito de serrilhado.
 
 **Cinnamon** também permite aplicar efeitos de pós-processamento personalizados após a renderização da cena, permitindo que os desenvolvedores criem efeitos visuais únicos e estilizados para seus jogos, como filtros de cor, distorções, desfoques e outros efeitos artísticos.
+
+# Capítulo 4: Matemática, Física e Detecção de Colisões
+
+## 4.1 Fundamentos Matemáticos e Álgebra Linear
+
+A **Cinnamon Engine** estende a biblioteca **JOML** (_Java OpenGL Math Library_) para manipular eficientemente as estruturas de dados fundamentais da computação gráfica, como vetores, matrizes e quaternions.
+
+Além da álgebra básica, a _engine_ também implementa em seu módulo matemático funções de suporte para a criação de ruídos procedurais (_Noise Functions_),
+onde podem ser utilizados para gerar terrenos, texturas e efeitos visuais de forma procedural, aumentando a diversidade e a complexidade dos jogos sem a necessidade de criar manualmente cada elemento.
+
+Também tem suporte para funções de criação de curvas paramétricas e funções de interpolação (_Easing Functions_), que são amplamente utilizadas para criar animações suaves e transições entre estados de objetos no jogo.
+
+## 4.2 Detecção de Colisões por **SAT** e Resolução
+
+A interação física entre os objetos no mundo requer um sistema de detecção e resolução de colisões. Na **Cinnamon Engine**, a detecção de colisões é dividida em duas fases, a fase ampla, chamada de _Broad Phase_ e a fase estreita, _Narrow Phase_.
+
+Na _Broad Phase_, a _engine_ utiliza muito o conceito de **AABB** (_Axis-Aligned Bounding Box_), que são caixas delimitadoras alinhadas aos eixos, para rapidamente descartar pares de objetos que não estão próximos o suficiente para colidir.
+
+Na _Narrow Phase_, quase se verifica se duas formas estão se sobrepondo, a **Cinnamon** utiliza o algoritmo **SAT** (_Separating Axis Theorem_).
+A teoria do **SAT** afirma que, se dois polígonos convexos não estão colidindo, então existe pelo menos um eixo de projeção no qual as projeções dos dois polígonos não se sobrepõem.
+A _engine_ aplica este teorema para testar intersecções entre diferentes formas de colisores, como **AABB**, **OBB** (_Oriented Bounding Box_), Esferas e Triângulos, permitindo uma detecção de colisões precisa e eficiente.
+
+Detectar a colisão é apenas metade do problema, a _engine_ precisa dizer como os objetos devem reagir físicamente.
+A **Cinnamon** implementa um sistema de resolução de colisões simples, dependendo do tipo de resolução desejada, permitindo respostas como _Slide_ (Deslizamento), _Bounce_ (Rebote) ou _Stop_ (Parada), dependendo do comportamento desejado para cada objeto.
