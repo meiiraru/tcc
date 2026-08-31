@@ -17,6 +17,10 @@ bin/
 .classpath
 .project
 
+# obsidian
+
+.obsidian/
+
 # macos
 
 *.DS_Store
