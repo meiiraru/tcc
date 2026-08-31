@@ -1,4 +1,4 @@
-![logo.gif](resources/logo.gif)
+![logo.gif|700](resources/logo.gif)
 
 # Capítulo 1: O Conceito de Motores de Jogos (_Game Engines_)
 
@@ -11,13 +11,13 @@ permitindo que o foco seja voltado para a parte mais criativa do desenvolvimento
 No primórdio dos jogos, na era do Atari e dos primeiros consoles, não se existia um conceito de _game engine_, pois os jogos eram desenvolvidos de forma muito mais direta,
 com cada jogo sendo uma aplicação independente, escrita do zero para cada plataforma específica.
 
-![pacman.png](resources/pacman.png)
+![pacman.png|483](resources/pacman.png)
 
 A mudança desse paradigma começou a ocorrer quando os desenvolvedores perceberam que muitos jogos compartilhavam elementos em comum, como renderização gráfica, física e processamento sonoro,
 separado dos dados dos jogos, como texturas, modelos 3D, sons e lógica de _gameplay_. _Engines_ pioneiras, como a **id Tech**, desenvolvida pela **id Software** para jogos como **Doom** e **Quake**,
 consolidaram a ideia de que uma _engine_ poderia ser licenciada e reutilizada em múltiplos projetos, permitindo criar experiências completamente diferentes com base na mesma tecnologia _core_.
 
-![doom.png](resources/doom.png)
+![doom.png|476](resources/doom.png)
 
 ## 1.2 Arquitetura Modular e Funcionalidades
 
@@ -29,7 +29,9 @@ incluindo renderização avançada, sistema de física, gerenciamento de recurso
 
 Essa modularização permite que desenvolvedores escolham apenas os subsistemas necessários para o seu projeto, facilitando também a manutenção e a escalabilidade da _engine_ em aplicações mais complexas.
 
-![cinnamon_pipeline_diagram.png](resources/cinnamon_pipeline_diagram.png)
+![cinnamon_pipeline_diagram.png|700](resources/cinnamon_pipeline_diagram.png)
+
+<div style="page-break-after: always;"></div>
 
 # Capítulo 2: Padrões de Design e Arquitetura de Motores de Jogos
 
@@ -51,7 +53,7 @@ O _render_ é feito de forma variável, ou seja, a cada quadro (_frame_) que o _
 Para evitar que o _render_ fique em par com a velocidade dos _Ticks_, a **Cinnamon** utiliza algoritmos de interpolação linear (conhecidos como _lerp_) para prever e suavizar o movimento dos objetos entre os _Ticks_ de lógica,
 permitindo com que a experiência visual seja mais agradável e fluida.
 
-![tick_render_example.png](resources/tick_render_example.png)
+![tick_render_example.png|700](resources/tick_render_example.png)
 
 ## 2.2 Gerenciamento de Objetos
 
@@ -82,13 +84,15 @@ são feitas através de um registro de eventos, onde cada subsistema pode se ins
 
 Eventos dentro do mundo do jogo, como colisões, interações com o jogador ou mudanças de estado, são tratados através do polimorfismo de funções e depende de cada objeto, que pode implementar métodos específicos para lidar com esses eventos.
 
+<div style="page-break-after: always;"></div>
+
 # Capítulo 3: Renderização Gráfica e Pipeline Visual
 
 A renderização gráfica é um dos aspectos mais visíveis e impactantes de um jogo, é o subsistema responsável por transformar modelos 3D, texturas, luzes e outros efeitos em uma imagem final que é exibida na tela do jogador.
 Esse processo ocorre dezenas ou centenas de vezes por segundo, dependendo da taxa de quadros (_frame rate_) do jogo, e envolve uma série de etapas complexas que compõem a _pipeline_ de renderização.
 A **Cinnamon Engine** foi projetada sobre a API gráfica **OpenGL**, comunicando-se diretamente com o _hardware_ através de chamadas de baixo nível fornecidas pela API **LWJGL (Lightweight Java Game Library)**, que é uma biblioteca de código aberto que fornece acesso a recursos de baixo nível do _hardware_, como gráficos, áudio e entrada de dispositivos.
 
-![rendering.png](resources/rendering.png)
+![rendering.png|700](resources/rendering.png)
 
 ## 3.1 _Pipeline_ Gráfico Programável e _Shaders_
 
@@ -111,7 +115,7 @@ ele pode ser desenhado imediatamente ou agrupado em lotes (_batches_) para reduz
 **Cinnamon** permite que vértices brutos sejam enviados diretamente para a GPU, sem a necessidade de criar objetos intermediários, o que é útil para objetos simples, interfaces gráficas e _debugging_.
 Esses vértices são capturados por um sistema de *Vertex Consumer*, que organiza os dados em _buffers_ e envia para a GPU em um único _draw call_, reduzindo significativamente a sobrecarga do processador.
 
-![hud_mesh.png](resources/hud_mesh.png)
+![hud_mesh.png|700](resources/hud_mesh.png)
 
 ## 3.3 Materiais, Iluminação Baseada em Física (_PBR_) e _Deferred Rendering_
 
@@ -124,7 +128,7 @@ Esses materiais reagem de maneira fisicamente precisa ao sistema de iluminação
 Além disso, para a renderização das cenas no mundo, a **Cinnamon** utiliza um sistema de _Deferred Rendering_, que permite que a iluminação e os efeitos visuais sejam aplicados de forma mais eficiente,
 separando a geometria da cena da iluminação, permitindo que múltiplas luzes sejam processadas sem a necessidade de recalcular a geometria para cada luz, aumentando o desempenho e a qualidade visual do jogo.
 
-![deferred_baking.png](resources/deferred_baking.png)
+![deferred_baking.png|700](resources/deferred_baking.png)
 
 ## 3.4 Pós-processamento e Efeitos Visuais
 
@@ -134,7 +138,9 @@ Nessa etapa a **Cinnamon Engine** aplica efeitos como **SSAO** (_Screen Space Am
 
 **Cinnamon** também permite aplicar efeitos de pós-processamento personalizados após a renderização da cena, permitindo que os desenvolvedores criem efeitos visuais únicos e estilizados para seus jogos, como filtros de cor, distorções, desfoques e outros efeitos artísticos.
 
-![ssao.png](resources/ssao.png)
+![ssao.png|700](resources/ssao.png)
+
+<div style="page-break-after: always;"></div>
 
 # Capítulo 4: Matemática, Física e Detecção de Colisões
 
@@ -147,7 +153,7 @@ onde podem ser utilizados para gerar terrenos, texturas e efeitos visuais de for
 
 Também tem suporte para funções de criação de curvas paramétricas e funções de interpolação (_Easing Functions_), que são amplamente utilizadas para criar animações suaves e transições entre estados de objetos no jogo.
 
-![easings.png](resources/easings.png)
+![easings.png|700](resources/easings.png)
 
 ## 4.2 Detecção de Colisões por **SAT** e Resolução
 
@@ -162,7 +168,9 @@ A _engine_ aplica este teorema para testar intersecções entre diferentes forma
 Detectar a colisão é apenas metade do problema, a _engine_ precisa dizer como os objetos devem reagir físicamente.
 A **Cinnamon** implementa um sistema de resolução de colisões simples, dependendo do tipo de resolução desejada, permitindo respostas como _Slide_ (Deslizamento), _Bounce_ (Rebote) ou _Stop_ (Parada), dependendo do comportamento desejado para cada objeto.
 
-![collisions.png](resources/collisions.png)
+![collisions.png|700](resources/collisions.png)
+
+<div style="page-break-after: always;"></div>
 
 # Capítulo 5: Estruturas de Dados Espaciais, Interface e Imersão
 
@@ -174,7 +182,7 @@ A **Octree** é uma estrutura de dados hierárquica que subdivide o espaço trid
 descartando nós que estão fora do campo de visão da câmera, permitindo que apenas os objetos visíveis sejam processados e renderizados, aumentando significativamente o desempenho do jogo,
 além também de otimizar a detecção de colisões, verificando apenas os objetos que estão dentro do mesmo nó ou em nós adjacentes.
 
-![octree.png](resources/octree.png)
+![octree.png|700](resources/octree.png)
 
 ## 5.2 Interface de Usuário
 
@@ -196,7 +204,9 @@ Por cada texto ser seu próprio nó, a _engine_ permite que textos filhos herdem
 A imersão é um aspecto crucial para a experiência do jogador, e a **Cinnamon Engine** oferece suporte a tecnologias de realidade virtual (_VR_).
 A _engine_ integra-se com dispositivos de VR através da API **OpenXR**, fornecendo informações como posição e orientação da cabeça do jogador e dos controladores para o desenvolvedor final.
 
-![candy_belt_gameplay.png](resources/candy_belt_gameplay.png)
+![candy_belt_gameplay.png|700](resources/candy_belt_gameplay.png)
+
+<div style="page-break-after: always;"></div>
 
 # Referências
 
