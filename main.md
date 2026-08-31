@@ -162,3 +162,11 @@ Por cada texto ser seu próprio nó, a _engine_ permite que textos filhos herdem
 
 A imersão é um aspecto crucial para a experiência do jogador, e a **Cinnamon Engine** oferece suporte a tecnologias de realidade virtual (_VR_).
 A _engine_ integra-se com dispositivos de VR através da API **OpenXR**, fornecendo informações como posição e orientação da cabeça do jogador e dos controladores para o desenvolvedor final.
+
+# Referências
+
+* Jason Gregory, Game Engine Architecture
+* David H. Eberly, 3D Game Engine Design - A Practical Approach to Real-Time Computer Graphics, Second Edition
+* Christer Ericson, Real-Time Collision Detection
+* Joey de Vries, Learn OpenGL, https://learnopengl.com/
+* LWJGL, Lightweight Java Game Library, https://lwjgl.org
