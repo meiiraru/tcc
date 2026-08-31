@@ -132,3 +132,33 @@ A _engine_ aplica este teorema para testar intersecções entre diferentes forma
 
 Detectar a colisão é apenas metade do problema, a _engine_ precisa dizer como os objetos devem reagir físicamente.
 A **Cinnamon** implementa um sistema de resolução de colisões simples, dependendo do tipo de resolução desejada, permitindo respostas como _Slide_ (Deslizamento), _Bounce_ (Rebote) ou _Stop_ (Parada), dependendo do comportamento desejado para cada objeto.
+
+# Capítulo 5: Estruturas de Dados Espaciais, Interface e Imersão
+
+## 5.1 Particionamento Espacial e Terrenos
+
+Renderizar e verificar colisões de um mundo inteiro a cada _frame_ seria computacionalmente inviável. Para resolver isso, a **Cinnamon Engine** estrutura o mundo do jogador utilizando o particionamento espacial baseado em **Octrees**.
+
+A **Octree** é uma estrutura de dados hierárquica que subdivide o espaço tridimensional em oito regiões menores (nós). Essa abordagem permite que a _engine_ aplique técnicas como _Frustum Culling_,
+descartando nós que estão fora do campo de visão da câmera, permitindo que apenas os objetos visíveis sejam processados e renderizados, aumentando significativamente o desempenho do jogo,
+além também de otimizar a detecção de colisões, verificando apenas os objetos que estão dentro do mesmo nó ou em nós adjacentes.
+
+## 5.2 Interface de Usuário
+
+O Sistema de interface de usuário, **GUI** (_Graphical User Interface_) da _engine_ é projetado para ser flexível e eficiente, permitindo que os desenvolvedores criem interfaces intuitivas e responsivas para seus jogos.
+
+A **Cinnamon Engine** implementa um sistema de **GUI** baseado em _Widgets_ e _Containers_, onde cada elemento da interface é um _Widget_ que pode ser posicionado, redimensionado e estilizado de acordo com as necessidades da janela atual.
+
+Toda janela contém um _Container_ base, que então pode conter outros _Containers_ e _Widgets_, estruturados como uma árvore, permitindo a criação de hierarquias complexas de elementos de interface, como menus, botões, barras de progresso, caixas de diálogo e mais.
+
+## 5.3 Texto
+
+A **Cinnamon** implementa um sistema de objetos de texto, permitindo que textos possam ser adicionados dentro de outros textos, criando uma hierarquia similar a de uma árvore.
+Os textos possuem uma propriedade de estilização, _Style_, que permite definir a fonte, cor e outros efeitos visuais, permitindo que os desenvolvedores criem interfaces de usuário mais ricas e personalizadas.
+
+Por cada texto ser seu próprio nó, a _engine_ permite que textos filhos herdem propriedades de estilização do texto pai, permitindo uma maior consistência visual e facilidade de manutenção da interface.
+
+## 5.4 Imersão e Integração com Realidade Virtual (VR)
+
+A imersão é um aspecto crucial para a experiência do jogador, e a **Cinnamon Engine** oferece suporte a tecnologias de realidade virtual (_VR_).
+A _engine_ integra-se com dispositivos de VR através da API **OpenXR**, fornecendo informações como posição e orientação da cabeça do jogador e dos controladores para o desenvolvedor final.
