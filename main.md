@@ -11,13 +11,13 @@ permitindo que o foco seja voltado para a parte mais criativa do desenvolvimento
 No primórdio dos jogos, na era do Atari e dos primeiros consoles, não se existia um conceito de _game engine_, pois os jogos eram desenvolvidos de forma muito mais direta,
 com cada jogo sendo uma aplicação independente, escrita do zero para cada plataforma específica.
 
-![pacman.png|483](resources/pacman.png)
+![pacman.png|480](resources/pacman.png)
 
 A mudança desse paradigma começou a ocorrer quando os desenvolvedores perceberam que muitos jogos compartilhavam elementos em comum, como renderização gráfica, física e processamento sonoro,
 separado dos dados dos jogos, como texturas, modelos 3D, sons e lógica de _gameplay_. _Engines_ pioneiras, como a **id Tech**, desenvolvida pela **id Software** para jogos como **Doom** e **Quake**,
 consolidaram a ideia de que uma _engine_ poderia ser licenciada e reutilizada em múltiplos projetos, permitindo criar experiências completamente diferentes com base na mesma tecnologia _core_.
 
-![doom.png|476](resources/doom.png)
+![doom.png|480](resources/doom.png)
 
 ## 1.2 Arquitetura Modular e Funcionalidades
 
@@ -90,7 +90,7 @@ Eventos dentro do mundo do jogo, como colisões, interações com o jogador ou m
 
 A renderização gráfica é um dos aspectos mais visíveis e impactantes de um jogo, é o subsistema responsável por transformar modelos 3D, texturas, luzes e outros efeitos em uma imagem final que é exibida na tela do jogador.
 Esse processo ocorre dezenas ou centenas de vezes por segundo, dependendo da taxa de quadros (_frame rate_) do jogo, e envolve uma série de etapas complexas que compõem a _pipeline_ de renderização.
-A **Cinnamon Engine** foi projetada sobre a API gráfica **OpenGL**, comunicando-se diretamente com o _hardware_ através de chamadas de baixo nível fornecidas pela API **LWJGL (Lightweight Java Game Library)**, que é uma biblioteca de código aberto que fornece acesso a recursos de baixo nível do _hardware_, como gráficos, áudio e entrada de dispositivos.
+A **Cinnamon Engine** foi projetada sobre a API gráfica **OpenGL**, comunicando-se diretamente com o _hardware_ através de chamadas de baixo nível fornecidas pela API **LWJGL** (_Lightweight Java Game Library_), que é uma biblioteca de código aberto que fornece acesso a recursos de baixo nível do _hardware_, como gráficos, áudio e entrada de dispositivos.
 
 ![rendering.png|700](resources/rendering.png)
 
