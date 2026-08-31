@@ -39,7 +39,7 @@ Essas atualizações são feitas em intervalos fixos, que no caso da **Cinnamon*
 a lógica da engine é executada de forma consistente e previsível.
 
 A fase de renderização, chamada de _Render_, é responsável por desenhar os elementos do jogo na tela, utilizando os dados atualizados na fase de lógica.
-O _renedr_ é feito de forma variável, ou seja, a cada quadro (_frame_) que o _hardware_ do jogador consegue processar, garantindo uma experiência visual mais fluida e responsiva.
+O _render_ é feito de forma variável, ou seja, a cada quadro (_frame_) que o _hardware_ do jogador consegue processar, garantindo uma experiência visual mais fluida e responsiva.
 Para evitar que o _render_ fique em par com a velocidade dos _Ticks_, a **Cinnamon** utiliza algoritmos de interpolação linear (conhecidos como _lerp_) para prever e suavizar o movimento dos objetos entre os _Ticks_ de lógica,
 permitindo com que a experiência visual seja mais agradável e fluida.
 
@@ -56,9 +56,55 @@ Nesse sistema clássico, utiliza-se bastante o conceito de herança e polimorfis
 Esse padrão é mais tradicional e pode ser mais intuitivo para desenvolvedores que já estão familiarizados com a programação orientada a objetos, permitindo uma prototipagem mais rápida,
 porém é menos flexível do que o sistema baseado em componentes.
 
-## 2.3 Comunicação e _dispatch_ de Eventos
+## 2.3 Comunicação e _Dispatch_ de Eventos
 
 A comunicação entre os diferentes subsistemas de uma _game engine_ é fundamental para o funcionamento de um jogo. Na **Cinnamon**, a comunicação com os eventos globais da _engine_
 são feitas através de um registro de eventos, onde cada subsistema pode se inscrever, utilizando interfaces funcionais, para receber chamadas em determinados pontos do ciclo de vida da _engine_.
 
 Eventos dentro do mundo do jogo, como colisões, interações com o jogador ou mudanças de estado, são tratados através do polimorfismo de funções e depende de cada objeto, que pode implementar métodos específicos para lidar com esses eventos.
+
+# Capítulo 3: Renderização Gráfica e Pipeline Visual
+
+A renderização gráfica é um dos aspectos mais visíveis e impactantes de um jogo, é o subsistema responsável por transformar modelos 3D, texturas, luzes e outros efeitos em uma imagem final que é exibida na tela do jogador.
+Esse processo ocorre dezenas ou centenas de vezes por segundo, dependendo da taxa de quadros (_frame rate_) do jogo, e envolve uma série de etapas complexas que compõem a _pipeline_ de renderização.
+A **Cinnamon Engine** foi projetada sobre a API gráfica **OpenGL**, comunicando-se diretamente com o _hardware_ através de chamadas de baixo nível fornecidas pela API **LWJGL (Lightweight Java Game Library)**, que é uma biblioteca de código aberto que fornece acesso a recursos de baixo nível do _hardware_, como gráficos, áudio e entrada de dispositivos.
+
+## 3.1 _Pipeline_ Gráfico Programável e _Shaders_
+
+O _pipeline_ gráfico programável é uma evolução do _pipeline_ fixo, permitindo que os desenvolvedores tenham controle total sobre como os gráficos são processados e renderizados.
+Essa _pipeline_ programável permite que a _engine_ utilize pequenos programas chamados _Shaders_, que são executados paralelamente na GPU (Placa de Vídeo) para realizar operações de renderização,
+como transformação de vértices, iluminação, texturização e efeitos visuais avançados.
+
+O fluxo básico da **Cinnamon Engine** envolve a passagem de dados da CPU (memória RAM) para a GPU (VRAM) através de _buffers_, onde os _Shaders_ processam esses dados e produzem a imagem final que é exibida na tela do jogador.
+Os vértices são processados em um _Vertex Shader_, que aplica transformações geométricas de matrices e calcula a posição final dos vértices na tela,
+formando as primitivas geométricas, como triângulos, que são então rasterizados e preenchidos com cores e texturas no _Fragment Shader_, que calcula a cor final de cada pixel na tela.
+
+Toda a _pipeline_ de renderização é altamente personalizável, permitindo que os desenvolvedores desabilitem ou criem efeitos visuais novos e únicos, permitindo uma alta estilização visual e identidade artística para cada jogo desenvolvido com a **Cinnamon Engine**.
+
+## 3.2 _Draw Calls_ e _Batching_
+
+Um dos maiores gargalos de desempenho em jogos é o excesso de comunicação entre a CPU e a GPU, que compõem o número de chamadas de desenho feitos à GPU, ou _draw calls_.
+Para mitigar este problema, a **Cinnamon Engine** implementa um modo misto entre _Immediate Mode_ e _Batching_, onde dependendo do tipo de objeto,
+ele pode ser desenhado imediatamente ou agrupado em lotes (_batches_) para reduzir o número de chamadas à GPU.
+
+**Cinnamon** permite que vértices brutos sejam enviados diretamente para a GPU, sem a necessidade de criar objetos intermediários, o que é útil para objetos simples, interfaces gráficas e _debugging_.
+Esses vértices são capturados por um sistema de *Vertex Consumer*, que organiza os dados em _buffers_ e envia para a GPU em um único _draw call_, reduzindo significativamente a sobrecarga do processador.
+
+## 3.3 Materiais, Iluminação Baseada em Física (_PBR_) e _Deferred Rendering_
+
+Para alcançar um nível de realismo visual mais elevado e customização, a **Cinnamon Engine** implementa um sistema de materiais compatível com o formato **MTL-PBR** (_Physically Based Rendering_).
+A teoria do PBR se baseia na microgeometria, na conservação da energia da luz e a simulação de como a luz interage com diferentes superfícies.
+Ao invés de estimar o brilho e a cor de uma superfície de forma arbitrária, o PBR utiliza propriedades físicas reais, como rugosidade e metalicidade para determinar como a luz é refletida e absorvida,
+resultando em uma aparência mais realista e consistente sob diferentes condições de iluminação.
+
+Esses materiais reagem de maneira fisicamente precisa ao sistema de iluminação da _engine_, que calculam diferentes tipos de luzes, como luzes pontuais, direcionais e _spotlights_, além de projetar sombras dinâmicas.
+Além disso, para a renderização das cenas no mundo, a **Cinnamon** utiliza um sistema de _Deferred Rendering_, que permite que a iluminação e os efeitos visuais sejam aplicados de forma mais eficiente,
+separando a geometria da cena da iluminação, permitindo que múltiplas luzes sejam processadas sem a necessidade de recalcular a geometria para cada luz, aumentando o desempenho e a qualidade visual do jogo.
+
+## 3.4 Pós-processamento e Efeitos Visuais
+
+O pós-processamento é uma etapa final na _pipeline_ de renderização, onde efeitos visuais adicionais são aplicados à imagem final antes de ser exibida na tela do jogador.
+
+Nessa etapa a **Cinnamon Engine** aplica efeitos como **SSAO** (_Screen Space Ambient Occlusion_), que simula a colusão da luz em cantos e superfícies próximas, aumentando a percepção de profundidade e realismo da cena, _Bloom_, que simula o efeito de luz intensa e difusa, **SSR** (_Screen Space Reflections_) que simula reflexos em superfícies refletivas, **FXAA** (_Fast Approximate Anti-Aliasing_) que suaviza as bordas dos objetos para evitar o efeito de serrilhado.
+
+**Cinnamon** também permite aplicar efeitos de pós-processamento personalizados após a renderização da cena, permitindo que os desenvolvedores criem efeitos visuais únicos e estilizados para seus jogos, como filtros de cor, distorções, desfoques e outros efeitos artísticos.
